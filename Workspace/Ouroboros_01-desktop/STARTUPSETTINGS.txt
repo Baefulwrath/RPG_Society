@@ -1,0 +1,9 @@
+title RPG Society
+useGL20 false
+width 1280
+height 720
+resizable false
+fullscreen false
+getSystemRes true
+startupState MENU
+defaultMenu main
