@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 

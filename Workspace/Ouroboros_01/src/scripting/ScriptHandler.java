@@ -54,6 +54,7 @@ public class ScriptHandler extends ProgramNode{
     	scripts.put("setMenu_", new SCRIPT_setMenu());
     	scripts.put("setState_", new SCRIPT_setState());
     	scripts.put("test_", new SCRIPT_test());
+    	scripts.put("startNewGame_", new SCRIPT_startNewGame());
     }
 
     public static void handleScript(String script) {

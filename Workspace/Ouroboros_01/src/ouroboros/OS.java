@@ -9,6 +9,7 @@ import ouroboros.modes.*;
 import rendering.RenderingHandler;
 import scripting.ScriptHandler;
 import ui.UIHandler;
+import universe.UniverseHandler;
 
 import assets.AssetHandler;
 
@@ -38,6 +39,7 @@ public class OS implements ApplicationListener {
 		input.setInputProcessor(inputhandler);
 		UIHandler.setup();
 		ScriptHandler.setup();
+		UniverseHandler.setup();
 	}
 	
 	public void setupModes(){
@@ -53,6 +55,7 @@ public class OS implements ApplicationListener {
 		AssetHandler.dispose();
 		UIHandler.dispose();
 		ScriptHandler.dispose();
+		UniverseHandler.dispose();
 	}
 
 //A better name for this method would be "update", you can blame LibGdx for this.
@@ -92,6 +95,7 @@ public class OS implements ApplicationListener {
 		UIHandler.update(InputHandler.staticMouse);
 		ScriptHandler.update();
 		RenderingHandler.render();
+		UniverseHandler.update();
 	}
 
 	@Override
@@ -117,5 +121,17 @@ public class OS implements ApplicationListener {
 	public void exit(){
 		dispose();
 		System.exit(0);
+	}
+	
+	public static ProgramMode getMode(ProgramState s){
+		return modes.get(s);
+	}
+	
+	public static ProgramMode getMode(){
+		return getMode(state);
+	}
+	
+	public static void startNewGame(){
+		state = GAME;
 	}
 }

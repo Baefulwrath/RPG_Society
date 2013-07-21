@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import rendering.Renderer;
 import rendering.RenderingHandler;
+import universe.UniverseHandler;
 
 public class REND_GAME extends Renderer{
 
@@ -25,6 +26,7 @@ public class REND_GAME extends Renderer{
 	@Override
 	public void staticRender() {
 		drawImage(RenderingHandler.testImg, 0, 0, RenderingHandler.w, RenderingHandler.h, 0, true, Color.WHITE, 1.0f, true);
+		drawTDWorld(UniverseHandler.getTDWorld());
 	}
 	
 }

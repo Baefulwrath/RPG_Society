@@ -15,7 +15,7 @@ public class MENU_main extends Menu{
 
 	@Override
 	protected void setup() {
-		addButton("Continue", "setMenu_continue", 150, 30, AssetHandler.basicButtonStyle);
+		addButton("Continue", "startNewGame_", 150, 30, AssetHandler.basicButtonStyle);
 		addButton("New Game", "setMenu_newGame", 150, 30, AssetHandler.basicButtonStyle);
 		addButton("Load Game", "setMenu_loadGame", 150, 30, AssetHandler.basicButtonStyle);
 		addButton("Options", "setMenu_options", 150, 30, AssetHandler.basicButtonStyle);

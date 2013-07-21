@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 public class AssetHandler extends ProgramNode{
@@ -40,6 +41,10 @@ public class AssetHandler extends ProgramNode{
 	private static ArrayList<String> exitTitlesN = new ArrayList<String>();
 	private static ArrayList<String> exitTexts = new ArrayList<String>();
 	
+	public static ArrayList<NPCAssetPack> playerAPs = new ArrayList<NPCAssetPack>();
+	
+	public static HashMap<String, TileMap> tileMaps = new HashMap<String, TileMap>();
+	
 	public static void setup(){
 		load();
 	}
@@ -60,6 +65,8 @@ public class AssetHandler extends ProgramNode{
             basicButtonStyle = new ButtonStyle(basicButton_u, basicButton_h, basicButton_d, basicLabelStyle);
 
     		loadExitTitles();
+    		
+    		loadTileMaps();
     		
             System.out.println("Fonts: " + fonts.toString());
     	}catch(Exception ex){
@@ -101,7 +108,7 @@ public class AssetHandler extends ProgramNode{
         messageLabelStyle = new LabelStyle(fonts.get("helv16"), Color.CYAN);
         logoLabelStyle = new LabelStyle(fonts.get("helv64"), Color.WHITE);
         debugLabelStyle = new LabelStyle(fonts.get("helv16"), Color.RED);
-        titleLabelStyle = new LabelStyle(fonts.get("title32"), Color.WHITE);
+        titleLabelStyle = new LabelStyle(fonts.get("soli64"), Color.WHITE);
         basicLabelStyle = new LabelStyle(fonts.get("soli32"), Color.WHITE);
         warningLabelStyle = new LabelStyle(fonts.get("helv16"), Color.RED);
     }
@@ -135,6 +142,18 @@ public class AssetHandler extends ProgramNode{
 			exitTexts.add(s.nextLine());
 		}
 	}
+	
+	public static void loadTileMaps(){
+		Scanner r = new Scanner(Gdx.files.internal("data/images/tilemaps/INDEX.index").readString());
+		while(r.hasNextLine()){
+			String file = r.nextLine();
+			tileMaps.put(file.substring(0, file.indexOf(".")), new TileMap(new Texture(Gdx.files.internal("data/images/tilemaps/" + file))));
+		}
+	}
+	
+	public static Sprite getTileTexture(int i, int map){
+		return tileMaps.get(map).getSprite(i);
+	}
 
 	public static String getExitTitle(boolean exit) {
 		if(exit){
@@ -150,5 +169,7 @@ public class AssetHandler extends ProgramNode{
 
 	public static void dispose() {
 		fonts.clear();
+		tileMaps.clear();
+		playerAPs.clear();
 	}
 }

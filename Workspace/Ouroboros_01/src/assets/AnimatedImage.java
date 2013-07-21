@@ -2,7 +2,9 @@ package assets;
 
 import java.awt.Rectangle;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 
@@ -10,6 +12,13 @@ public class AnimatedImage extends Animation{
 	
 	public Sprite[] imgs = new Sprite[0];
 	public boolean setBounds = false;
+	
+	public AnimatedImage(Texture t, int w){
+		imgs = new Sprite[w % t.getWidth()];
+		for(int i = 0; i < w % t.getWidth(); i++){
+			imgs[i] = new Sprite(new TextureRegion(t, w * i, 0));
+		}
+	}
 	
 	public AnimatedImage(Sprite s, int x, int y, int w, int h){
 		imgs = new Sprite[1];
