@@ -55,12 +55,12 @@ public class AssetHandler extends ProgramNode{
     		
     		loadLabelStyles();
 
-            basicButton_u = parsePatch(files.internal("data/images/ninepatches/basicButton_u_p.txt").readString(), new Texture(files.internal("data/images/ninepatches/basicButton_u.png")));
-            basicButton_h = parsePatch(files.internal("data/images/ninepatches/basicButton_h_p.txt").readString(), new Texture(files.internal("data/images/ninepatches/basicButton_h.png")));
-            basicButton_d = parsePatch(files.internal("data/images/ninepatches/basicButton_d_p.txt").readString(), new Texture(files.internal("data/images/ninepatches/basicButton_d.png")));
+            basicButton_u = parsePatch(files.internal("data/graphics/ninepatches/basicButton_u_p.data").readString(), new Texture(files.internal("data/graphics/ninepatches/basicButton_u.png")));
+            basicButton_h = parsePatch(files.internal("data/graphics/ninepatches/basicButton_h_p.data").readString(), new Texture(files.internal("data/graphics/ninepatches/basicButton_h.png")));
+            basicButton_d = parsePatch(files.internal("data/graphics/ninepatches/basicButton_d_p.data").readString(), new Texture(files.internal("data/graphics/ninepatches/basicButton_d.png")));
             
-            basicHud = parsePatch(files.internal("data/images/ninepatches/basicHud_p.txt").readString(), new Texture(files.internal("data/images/ninepatches/basicHud.png")));
-            brushImg = parsePatch(files.internal("data/images/ninepatches/brushImg_p.txt").readString(), new Texture(files.internal("data/images/ninepatches/brushImg.png")));
+            basicHud = parsePatch(files.internal("data/graphics/ninepatches/basicHud_p.data").readString(), new Texture(files.internal("data/graphics/ninepatches/basicHud.png")));
+            brushImg = parsePatch(files.internal("data/graphics/ninepatches/brushImg_p.data").readString(), new Texture(files.internal("data/graphics/ninepatches/brushImg.png")));
             
             basicButtonStyle = new ButtonStyle(basicButton_u, basicButton_h, basicButton_d, basicLabelStyle);
 
@@ -126,7 +126,7 @@ public class AssetHandler extends ProgramNode{
     }
 	
 	public static void loadExitTitles(){
-		String text = Gdx.files.internal("data/content/exitTitles").readString();
+		String text = Gdx.files.internal("data/content/exitTitles.data").readString();
 		Scanner s = new Scanner(text);
 		while(s.hasNextLine()){
 			String line = s.nextLine();
@@ -136,7 +136,7 @@ public class AssetHandler extends ProgramNode{
 				exitTitlesY.add(line.substring(2));
 			}
 		}
-		text = Gdx.files.internal("data/content/exitTexts").readString();
+		text = Gdx.files.internal("data/content/exitTexts.data").readString();
 		s = new Scanner(text);
 		while(s.hasNextLine()){
 			exitTexts.add(s.nextLine());
@@ -144,10 +144,10 @@ public class AssetHandler extends ProgramNode{
 	}
 	
 	public static void loadTileMaps(){
-		Scanner r = new Scanner(Gdx.files.internal("data/images/tilemaps/INDEX.index").readString());
+		Scanner r = new Scanner(Gdx.files.internal("data/graphics/tilemaps/INDEX.data").readString());
 		while(r.hasNextLine()){
 			String file = r.nextLine();
-			tileMaps.put(file.substring(0, file.indexOf(".")), new TileMap(new Texture(Gdx.files.internal("data/images/tilemaps/" + file))));
+			tileMaps.put(file.substring(0, file.indexOf(".")), new TileMap(new Texture(Gdx.files.internal("data/graphics/tilemaps/" + file))));
 		}
 	}
 	

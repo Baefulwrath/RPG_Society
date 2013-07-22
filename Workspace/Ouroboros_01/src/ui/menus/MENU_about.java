@@ -15,7 +15,7 @@ public class MENU_about extends Menu{
 
 	@Override
 	protected void setup() {
-		addTextArea("RPG Society, it's an rpg so... you know. That's cool", 1000, 20, AssetHandler.basicLabelStyle);
+		addTextArea("This text is supposed to be above the 'back'-button.", 1000, 20, AssetHandler.basicLabelStyle);
 		addButton("Back", "setMenu_main", 100, 30, AssetHandler.basicButtonStyle);
 	}
 	
