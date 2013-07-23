@@ -1,3 +1,4 @@
+package main;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -25,9 +26,9 @@ public class Main {
 		run();
 	}
 	
-	public static void init(){
+	private static void init(){
 		frame.setVisible(true);
-		frame.setResizable(true);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addKeyListener(IH);
 		frame.addMouseListener(IH);
@@ -37,9 +38,14 @@ public class Main {
 		frame.add(scr);
 		Assets.init();
 		world = new World("", "", 10, 10, 0, 0);
+		loadButtons();
 		initialized = true;
 	}
 	
+	private static void loadButtons() {
+		buttons.add(new Button(width - 180, 50, 100, 20, "Test", "print_test"));
+	}
+
 	public static void run(){
 		while(true){
 			try{
@@ -54,6 +60,7 @@ public class Main {
 	}
 	
 	public static void update(){
+		InputHandler.update();
 		scr.repaint();
 	}
 	

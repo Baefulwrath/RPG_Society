@@ -1,7 +1,6 @@
-import java.io.BufferedReader;
+package main;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Random;
 import java.util.Scanner;
 
 
@@ -50,6 +49,7 @@ public class World {
 			while(r.hasNextLine()){
 				tiles[x][y] = new Tile(Integer.parseInt(r.nextLine()), Integer.parseInt(r.nextLine()), Integer.parseInt(r.nextLine()), TW, TW, Integer.parseInt(r.nextLine()), Boolean.parseBoolean(r.nextLine()));
 			}
+			r.close();
 		} catch (FileNotFoundException ex) {
 			System.out.println("File not found.");
 		}

@@ -1,3 +1,4 @@
+package main;
 
 
 import java.io.BufferedReader;
@@ -42,6 +43,7 @@ public class ScriptHandler{
     }
     
     public static void loadScripts(){
+    	scripts.put("print_", new SCRIPT_print());
     }
 
     public static void handleScript(String script) {

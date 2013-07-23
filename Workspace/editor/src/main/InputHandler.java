@@ -1,3 +1,5 @@
+package main;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -6,6 +8,8 @@ import java.awt.event.MouseMotionListener;
 
 
 public class InputHandler implements KeyListener, MouseListener, MouseMotionListener{
+	
+	public static Pointer mouse = new Pointer(0, 0, 1, 1);
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
@@ -29,6 +33,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		for(int i = 0; i < Main.buttons.size(); i++){
+			Main.buttons.get(i).press(mouse);
+		}
 	}
 
 	@Override
@@ -47,4 +54,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	public void keyTyped(KeyEvent arg0) {
 	}
 
+	public static void update(){
+		try {
+			mouse.position(Main.scr.getMousePosition());
+		} catch (Exception ex) {}
+	}
 }
