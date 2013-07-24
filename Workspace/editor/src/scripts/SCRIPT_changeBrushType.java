@@ -13,7 +13,7 @@ public class SCRIPT_changeBrushType extends Script{
 	@Override
 	public void activate(String line) {
 		String[] choices = Assets.getTileTitles(true);
-		String input = (String) JOptionPane.showInputDialog(Main.frame, "", "", JOptionPane.QUESTION_MESSAGE, null, choices, choices[Main.brush.type]);
+		String input = (String) JOptionPane.showInputDialog(Main.frame, "Choose brush tile-type", "Brush type", JOptionPane.QUESTION_MESSAGE, null, choices, choices[Main.brush.type]);
 		if(input != null){
 			Main.brush.type = Integer.parseInt(input.substring(0, 1));
 		}

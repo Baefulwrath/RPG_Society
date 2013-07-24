@@ -1,13 +1,16 @@
 package main;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
 
 
 public class Screen extends JPanel{
+	public int viewDistance = 50;
 	
 	public Screen(){
 		
@@ -16,9 +19,11 @@ public class Screen extends JPanel{
 	public void paint(Graphics g){
 		try {
 			Graphics2D g2d = (Graphics2D) g;
+			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 			g2d.setColor(Color.BLACK);
 			g2d.fill(new Rectangle2D.Float(0, 0, getWidth(), getHeight()));
 			drawWorld(g2d, Main.world);
+			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
 			g2d.setColor(Color.BLUE);
 			g2d.drawRect(Main.brush.x, Main.brush.y, Main.brush.width, Main.brush.height);
 			g2d.setColor(Color.DARK_GRAY);
@@ -32,7 +37,9 @@ public class Screen extends JPanel{
 			for(int i = 0; i < Main.buttons.size(); i++){
 				drawButton(g2d, Main.buttons.get(i));
 			}
+			g2d.drawImage(Assets.overlay, 0, 0, getWidth(), getHeight(), null);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 	
@@ -46,22 +53,38 @@ public class Screen extends JPanel{
 	}
 	
 	public void drawWorld(Graphics2D g2d, World w){
-		if(w.tiles.length > 0){
+		//if(w.tiles.length > 0){
 			for(int x = 0; x < w.tiles.length; x++){
 				for(int y = 0; y < w.tiles[x].length; y++){
-					drawTile(g2d, w.tiles[x][y], w.x, w.y);
+					for(int z = Main.brush.z - viewDistance; z < viewDistance; z++){
+						if(Main.brush.getDistance(z) < viewDistance && z >= 0){
+							drawTile(g2d, w.tiles[x][y][z], z);
+						}
+					}
 				}
 			}
-		}
+		//}
 	}
 	
-	public void drawTile(Graphics2D g2d, Tile t, int x, int y){
-		g2d.drawImage(Assets.getTileImage(t.type), t.x + x, t.y + y, t.width, t.height, null);
-		if(Main.showGrid){
-			g2d.drawImage(Assets.grid, t.x + x, t.y + y, t.width, t.height, null);
+	private float getTileOpacity(int z) {
+		int distance = Main.brush.getDistance(z);
+		float value = 1.0f;
+		for(int i = 0; i < distance; i++){
+			value *= 0.1;
+		}
+		return value;
+	}
+
+	public void drawTile(Graphics2D g2d, Tile t, int z){
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, getTileOpacity(z)));
+		g2d.drawImage(Assets.getTileImage(t.type), t.x, t.y, t.width, t.height, null);
+		if(Main.showGrid && z == Main.brush.z && t.type != 0){
+			g2d.drawImage(Assets.grid, t.x, t.y, t.width, t.height, null);
+		}else if(Main.showGrid &&  z == Main.brush.z){
+			g2d.drawImage(Assets.grid, t.x, t.y, t.width, t.height, null);
 		}
 		if(t.block){
-			g2d.drawImage(Assets.block, t.x + x, t.y + y, t.width, t.height, null);
+			g2d.drawImage(Assets.block, t.x, t.y, t.width, t.height, null);
 		}
 	}
 	

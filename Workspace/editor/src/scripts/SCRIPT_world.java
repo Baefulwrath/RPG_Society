@@ -1,5 +1,7 @@
 package scripts;
 
+import java.awt.HeadlessException;
+
 import javax.swing.JOptionPane;
 
 import main.Main;
@@ -14,12 +16,16 @@ public class SCRIPT_world extends Script{
 		switch(line){
 			case "new":
 				if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(Main.frame, "Are you sure?", "New world", JOptionPane.YES_NO_OPTION)){
-					String title = JOptionPane.showInputDialog(Main.frame, "Input Title");
-					String id = JOptionPane.showInputDialog(Main.frame, "Input Id");
-					String cell = JOptionPane.showInputDialog(Main.frame, "Input Cell");
-					int width = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Input Width"));
-					int height = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Input Height"));
-					Main.world = new World(title, id, cell, width, height, 0, 0);
+					try {
+						String title = JOptionPane.showInputDialog(Main.frame, "Input Title");
+						String id = JOptionPane.showInputDialog(Main.frame, "Input Id");
+						String cell = JOptionPane.showInputDialog(Main.frame, "Input Realm");
+						int width = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Input Width"));
+						int height = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Input Height"));
+						Main.world = new World(title, id, cell, width, height, 0, 0);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 				}
 				break;
 			case "load":

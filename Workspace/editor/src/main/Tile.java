@@ -6,21 +6,20 @@ import java.awt.Rectangle;
 public class Tile extends Rectangle{
 	public int type;
 	public boolean block;
-	public int z = 0;
-	public Tile(int xi, int yi, int z, int w, int h, int ty, boolean blocked){
+	public Tile(int xi, int yi, int w, int h, int ty, boolean blocked){
 		super(xi, yi, w, h);
 		type = ty;
 		block = blocked;
 	}
-	public Tile(Rectangle r, int z, int ty, boolean blocked){
+	public Tile(Rectangle r, int ty, boolean blocked){
 		super(r.x, r.y, r.width, r.height);
 		type = ty;
 		block = blocked;
 	}
 	
-	public boolean hits(Tile t, boolean depth){
+	public boolean hits(Tile t, int z1, int z2, boolean depth){
 		if(depth){
-			if(t.z == z && intersects(t)){
+			if(z1 == z2  && intersects(t)){
 				return true;
 			}else{
 				return false;
@@ -52,6 +51,5 @@ public class Tile extends Rectangle{
 	public void mirror(Tile t) {
 		type = t.type;
 		block = t.block;
-		z = t.z;
 	}
 }

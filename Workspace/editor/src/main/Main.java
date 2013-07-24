@@ -34,7 +34,7 @@ public class Main {
 	
 	private static void init(){
 		frame.setVisible(true);
-		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addKeyListener(IH);
 		frame.addMouseListener(IH);
@@ -64,12 +64,13 @@ public class Main {
 		buttons.add(new Button(width - 180, 500, 150, 20, "New World", "world_new"));
 		buttons.add(new Button(width - 180, 530, 150, 20, "Load World", "world_load"));
 		buttons.add(new Button(width - 180, 560, 150, 20, "Save World", "world_save"));
+		buttons.add(new Button(width - 180, 590, 150, 20, "Change Tileset", "changeTileset_"));
 		
 		infoBoxes.clear();
 		infoBoxes.add(new InfoBox(width - 150, 5, 100, 16, new String[]{InputHandler.mouse.x + ", " + InputHandler.mouse.y}));
 		infoBoxes.add(new InfoBox(width - 140, 60, 100, 60, new String[]{"Z: " + brush.z, Assets.getTileTitle(brush.type), Assets.getTileInfo(brush.type), "Bock: " + brush.block}));
-		infoBoxes.add(new InfoBox(width - 180, 230, 150, 100, new String[]{"Show Grid: " + showGrid, "Speed: " + world.speed, "Brush Size: " + brush.width, "Title: " + world.title, "ID: " + world.id, "Cell: " + world.cell}));
-		infoBoxes.add(new InfoBox(width - 200, height - 50, 200, 16, new String[]{message}));
+		infoBoxes.add(new InfoBox(width - 180, 230, 150, 100, new String[]{"Show Grid: " + showGrid, "Speed: " + world.speed, "Brush Size: " + brush.width, "Title: " + world.title, "ID: " + world.id, "Realm: " + world.realm}));
+		infoBoxes.add(new InfoBox(width - 210, height - 70, 180, 16, new String[]{message}));
 	}
 
 	public static void run(){
@@ -86,6 +87,8 @@ public class Main {
 	}
 	
 	public static void update(){
+		width = frame.getWidth();
+		height = frame.getHeight();
 		loadUI();
 		if(painting){
 			paint();

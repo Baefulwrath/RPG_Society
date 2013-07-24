@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class World {
 	public String title;
 	public String id;
-	public String cell;
-	public Tile[][] tiles;
+	public String realm;
+	public Tile[][][] tiles;
 	public int x;
 	public int y;
 	private static int TW = 64;
@@ -18,16 +18,18 @@ public class World {
 	public boolean down = false;
 	public int speed = 5;
 	
-	public World(String t, String i, String c, int w, int h, int xin, int yin){
+	public World(String t, String i, String r, int w, int h, int xin, int yin){
 		title = t;
 		id = i;
-		cell = c;
+		realm = r;
 		x = xin;
 		y = yin;
-		tiles = new Tile[w][h];
+		tiles = new Tile[w][h][1000];
 		for(int xi = 0; xi < w; xi++){
 			for(int yi = 0; yi < h; yi++){
-				tiles[xi][yi] = new Tile(TW * xi, TW * yi, 0, TW, TW, 0, false);
+				for(int zi = 0; zi < tiles[xi][yi].length; zi++){
+					tiles[xi][yi][zi] = new Tile(TW * xi, TW * yi, TW, TW, 0, false);
+				}
 			}
 		}
 	}
@@ -50,12 +52,11 @@ public class World {
 			Scanner r = new Scanner(new File(file));
 			title = r.nextLine();
 			id = r.nextLine();
-			cell = r.nextLine();
-			tiles = new Tile[Integer.parseInt(r.nextLine())][Integer.parseInt(r.nextLine())];
-			int x = 0;
-			int y = 0;
+			realm = r.nextLine();
+			tiles = new Tile[Integer.parseInt(r.nextLine())][Integer.parseInt(r.nextLine())][Integer.parseInt(r.nextLine())];
 			while(r.hasNextLine()){
-				tiles[x][y] = new Tile(Integer.parseInt(r.nextLine()), Integer.parseInt(r.nextLine()), Integer.parseInt(r.nextLine()), TW, TW, Integer.parseInt(r.nextLine()), Boolean.parseBoolean(r.nextLine()));
+				tiles[Integer.parseInt(r.nextLine())][Integer.parseInt(r.nextLine())][Integer.parseInt(r.nextLine())] = new Tile(Integer.parseInt(r.nextLine()), Integer.parseInt(r.nextLine()), TW, TW, Integer.parseInt(r.nextLine()), Boolean.parseBoolean(r.nextLine()));
+				
 			}
 			r.close();
 		} catch (FileNotFoundException ex) {
@@ -67,8 +68,10 @@ public class World {
 	public void paint(Tile t) {
 		for(int xi = 0; xi < tiles.length; xi++){
 			for(int yi = 0; yi < tiles[xi].length; yi++){
-				if(tiles[xi][yi].intersects(t) && t.z == tiles[xi][yi].z){
-					tiles[xi][yi].mirror(t);
+				for(int zi = 0; zi < tiles[xi][yi].length; zi++){
+					if(tiles[xi][yi][zi].intersects(t)){
+						tiles[xi][yi][zi].mirror(t);
+					}
 				}
 			}
 		}
@@ -76,14 +79,27 @@ public class World {
 	
 	public void update(){
 		if(up){
-			y -= speed;
+			move(0, -speed);
 		}else if(down){
-			y += speed;
+			move(0, speed);
 		}
 		if(left){
-			x -= speed;
+			move(-speed, 0);
 		}else if(right){
-			x += speed;
+			move(speed, 0);
+		}
+	}
+	
+	public void move(int xm, int ym){
+		x += xm;
+		y += ym;
+		for(int xi = 0; xi < tiles.length; xi++){
+			for(int yi = 0; yi < tiles[xi].length; yi++){
+				for(int zi = 0; zi < tiles[xi][yi].length; zi++){
+					tiles[xi][yi][zi].x += xm;
+					tiles[xi][yi][zi].y += ym;
+				}
+			}
 		}
 	}
 }

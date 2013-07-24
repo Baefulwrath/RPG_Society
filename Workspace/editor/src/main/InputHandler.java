@@ -95,6 +95,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 			case KeyEvent.VK_B:
 				ScriptHandler.handleScript("switchBrushBlock_");
 				break;
+			case KeyEvent.VK_G:
+				ScriptHandler.handleScript("switchGrid_");
+				break;
 		}
 	}
 

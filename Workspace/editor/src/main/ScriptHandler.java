@@ -51,6 +51,7 @@ public class ScriptHandler{
     	scripts.put("worldSpeed_", new SCRIPT_worldSpeed());
     	scripts.put("brushSize_", new SCRIPT_brushSize());
     	scripts.put("world_", new SCRIPT_world());
+    	scripts.put("changeTileset_", new SCRIPT_changeTileset());
     }
 
     public static void handleScript(String script) {
