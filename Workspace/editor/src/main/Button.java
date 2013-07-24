@@ -6,19 +6,11 @@ import java.awt.Rectangle;
 public class Button extends Rectangle{
 	public String title = "";
 	public String script = "";
-	public boolean pressed = false;
 	
 	public Button(int xi, int yi, int w, int h, String ti, String scr){
 		super(xi, yi, w, h);
 		title = ti;
 		script = scr;
-	}
-	
-	public void press(Pointer p){
-		if(hover() && !pressed){
-			ScriptHandler.handleScript(script);
-			pressed = true;
-		}
 	}
 	
 	public boolean hover(){
@@ -34,22 +26,24 @@ public class Button extends Rectangle{
 	}
 	
 	public void release(){
-		pressed = false;
+		if(hover()){
+			ScriptHandler.handleScript(script);
+		}
 	}
 	
 	public Color getBackColor(){
 		if(hover()){
-			return Color.GRAY;
-		}else{
 			return Color.LIGHT_GRAY;
+		}else{
+			return Color.BLACK;
 		}
 	}
 	
 	public Color getTextColor(){
 		if(hover()){
-			return Color.WHITE;
-		}else{
 			return Color.BLACK;
+		}else{
+			return Color.GREEN;
 		}
 	}
 }

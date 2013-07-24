@@ -1,0 +1,10 @@
+Grass
+Regular grass
+Stone
+Regular stone
+Sand
+Regular sand
+Snow
+Regular snow
+Gravel
+Regular gravel

@@ -14,17 +14,26 @@ public class Screen extends JPanel{
 	}
 	
 	public void paint(Graphics g){
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setColor(Color.BLACK);
-		g2d.fill(new Rectangle2D.Float(0, 0, getWidth(), getHeight()));
-		drawWorld(g2d, Main.world);
-		g2d.setColor(Color.DARK_GRAY);
-		g2d.fill(new Rectangle2D.Float(getWidth() - 200, 0, 200, getHeight()));
-		for(int i = 0; i < Main.buttons.size(); i++){
-			drawButton(g2d, Main.buttons.get(i));
+		try {
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setColor(Color.BLACK);
+			g2d.fill(new Rectangle2D.Float(0, 0, getWidth(), getHeight()));
+			drawWorld(g2d, Main.world);
+			g2d.setColor(Color.BLUE);
+			g2d.drawRect(Main.brush.x, Main.brush.y, Main.brush.width, Main.brush.height);
+			g2d.setColor(Color.DARK_GRAY);
+			g2d.fill(new Rectangle2D.Float(getWidth() - 200, 0, 200, getHeight()));
+			g2d.setColor(Color.LIGHT_GRAY);
+			g2d.fill(new Rectangle2D.Float(getWidth() - 200, 0, 5, getHeight()));
+			g2d.drawImage(Assets.getTileImage(Main.brush.type), getWidth() - 170, 60, 32, 32, null);
+			for(int i = 0; i < Main.infoBoxes.size(); i++){
+				drawInfoBox(g2d, Main.infoBoxes.get(i));
+			}
+			for(int i = 0; i < Main.buttons.size(); i++){
+				drawButton(g2d, Main.buttons.get(i));
+			}
+		} catch (Exception ex) {
 		}
-		g2d.setColor(Color.GREEN);
-		g2d.drawString(InputHandler.mouse.x + ", " + InputHandler.mouse.y, 200, 20);
 	}
 	
 	public void drawButton(Graphics2D g2d, Button b){
@@ -47,6 +56,23 @@ public class Screen extends JPanel{
 	}
 	
 	public void drawTile(Graphics2D g2d, Tile t, int x, int y){
-		g2d.drawImage(Assets.getTileImage(t.texture), t.x + x, t.y + y, t.width, t.height, null);
+		g2d.drawImage(Assets.getTileImage(t.type), t.x + x, t.y + y, t.width, t.height, null);
+		if(Main.showGrid){
+			g2d.drawImage(Assets.grid, t.x + x, t.y + y, t.width, t.height, null);
+		}
+		if(t.block){
+			g2d.drawImage(Assets.block, t.x + x, t.y + y, t.width, t.height, null);
+		}
+	}
+	
+	public void drawInfoBox(Graphics2D g2d, InfoBox n){
+		g2d.setColor(n.getBackColor());
+		g2d.fill(new Rectangle2D.Float(n.x, n.y, n.width, n.height));
+		g2d.setColor(n.getTextColor());
+		for(int i = 0; i < n.text.length; i++){
+			g2d.drawString(n.text[i], n.x + 2, n.y + 12 + (12 * i));
+		}
+		g2d.setColor(Color.GRAY);
+		g2d.drawRect(n.x, n.y, n.width, n.height);
 	}
 }

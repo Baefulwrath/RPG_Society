@@ -44,6 +44,13 @@ public class ScriptHandler{
     
     public static void loadScripts(){
     	scripts.put("print_", new SCRIPT_print());
+    	scripts.put("brushZ_", new SCRIPT_brushZ());
+    	scripts.put("changeBrushType_", new SCRIPT_changeBrushType());
+    	scripts.put("switchBrushBlock_", new SCRIPT_switchBrushBlock());
+    	scripts.put("switchGrid_", new SCRIPT_switchGrid());
+    	scripts.put("worldSpeed_", new SCRIPT_worldSpeed());
+    	scripts.put("brushSize_", new SCRIPT_brushSize());
+    	scripts.put("world_", new SCRIPT_world());
     }
 
     public static void handleScript(String script) {
