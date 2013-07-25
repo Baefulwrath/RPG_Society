@@ -102,4 +102,17 @@ public class World {
 			}
 		}
 	}
+
+	public boolean onTop(int x2, int y2, int z) {
+		boolean value = true;
+		if(z < tiles[x2][y2].length - 1){
+			for(int i = z + 1; i < tiles[x2][y2].length; i++){
+				if(tiles[x2][y2][i].type != 0){
+					value = false;
+					break;
+				}
+			}
+		}
+		return value;
+	}
 }

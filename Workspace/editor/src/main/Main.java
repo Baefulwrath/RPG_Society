@@ -23,6 +23,8 @@ public class Main {
 	
 	public static boolean painting = false;
 	public static boolean initialized = false;
+	public static long timeSinceLastUpdate = 0;
+	public static long lastUpdate = 0;
 	
 	public static String message = "Ready for work :)";
 	public static boolean showGrid = true;
@@ -71,6 +73,7 @@ public class Main {
 		infoBoxes.add(new InfoBox(width - 140, 60, 100, 60, new String[]{"Z: " + brush.z, Assets.getTileTitle(brush.type), Assets.getTileInfo(brush.type), "Bock: " + brush.block}));
 		infoBoxes.add(new InfoBox(width - 180, 230, 150, 100, new String[]{"Show Grid: " + showGrid, "Speed: " + world.speed, "Brush Size: " + brush.width, "Title: " + world.title, "ID: " + world.id, "Realm: " + world.realm}));
 		infoBoxes.add(new InfoBox(width - 210, height - 70, 180, 16, new String[]{message}));
+		infoBoxes.add(new InfoBox(width - 210, height - 90, 40, 16, new String[]{"" + timeSinceLastUpdate}));
 	}
 
 	public static void run(){
@@ -97,6 +100,8 @@ public class Main {
 		InputHandler.update();
 		world.update();
 		scr.repaint();
+		timeSinceLastUpdate = System.currentTimeMillis() - lastUpdate;
+		lastUpdate = System.currentTimeMillis();
 	}
 	
 	public static void exit(){

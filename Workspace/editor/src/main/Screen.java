@@ -39,7 +39,7 @@ public class Screen extends JPanel{
 			}
 			g2d.drawImage(Assets.overlay, 0, 0, getWidth(), getHeight(), null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 	}
 	
@@ -53,17 +53,21 @@ public class Screen extends JPanel{
 	}
 	
 	public void drawWorld(Graphics2D g2d, World w){
-		//if(w.tiles.length > 0){
+		if(w.tiles.length > 0){
 			for(int x = 0; x < w.tiles.length; x++){
 				for(int y = 0; y < w.tiles[x].length; y++){
 					for(int z = Main.brush.z - viewDistance; z < viewDistance; z++){
-						if(Main.brush.getDistance(z) < viewDistance && z >= 0){
-							drawTile(g2d, w.tiles[x][y][z], z);
+						if(z >= Main.brush.z){
+							if(Main.brush.getDistance(z) < viewDistance){
+								if(Main.world.onTop(x, y, z)){
+									drawTile(g2d, w.tiles[x][y][z], z);
+								}
+							}
 						}
 					}
 				}
 			}
-		//}
+		}
 	}
 	
 	private float getTileOpacity(int z) {

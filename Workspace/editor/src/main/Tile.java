@@ -17,22 +17,6 @@ public class Tile extends Rectangle{
 		block = blocked;
 	}
 	
-	public boolean hits(Tile t, int z1, int z2, boolean depth){
-		if(depth){
-			if(z1 == z2  && intersects(t)){
-				return true;
-			}else{
-				return false;
-			}
-		}else{
-			if(intersects(t)){
-				return true;
-			}else{
-				return false;
-			}
-		}
-	}
-	
 	public void position(int xi, int yi, boolean centered){
 		x = xi;
 		y = yi;
