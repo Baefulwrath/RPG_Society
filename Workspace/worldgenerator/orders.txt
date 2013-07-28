@@ -1,0 +1,10 @@
+ww: 400
+wh: 400
+cw: 25
+ch: 25
+wi: aerum
+tt: 1
+ts: 64
+tb: false
+ld: true
+//remember that the id must be exactly 5 characters.

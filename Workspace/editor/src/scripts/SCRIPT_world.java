@@ -1,7 +1,5 @@
 package scripts;
 
-import java.awt.HeadlessException;
-
 import javax.swing.JOptionPane;
 
 import main.Main;
@@ -20,9 +18,11 @@ public class SCRIPT_world extends Script{
 						String title = JOptionPane.showInputDialog(Main.frame, "Input Title");
 						String id = JOptionPane.showInputDialog(Main.frame, "Input Id");
 						String cell = JOptionPane.showInputDialog(Main.frame, "Input Realm");
-						int width = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Input Width"));
-						int height = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Input Height"));
-						Main.world = new World(title, id, cell, width, height, 0, 0);
+						int cw = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Input Chunks (W)"));
+						int ch = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Input Chunks (H)"));
+						int tw = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Input Tiles (W)"));
+						int th = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Input Tiles (H)"));
+						Main.world = new World(title, id, cell, cw, ch, 0, 0, tw, th);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}

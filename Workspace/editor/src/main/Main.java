@@ -1,7 +1,10 @@
 package main;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 public class Main {
@@ -19,15 +22,17 @@ public class Main {
 	public static JFrame frame = new JFrame();
 	public static Screen scr = new Screen();
 	public static InputHandler IH = new InputHandler();
-	public static Brush brush = new Brush(0, 0, 0, 10, 10);
+	public static Brush brush = new Brush(0, 0, 10, 10);
 	
 	public static boolean painting = false;
 	public static boolean initialized = false;
 	public static long timeSinceLastUpdate = 0;
+	public static ArrayList<Long> times = new ArrayList<Long>();
 	public static long lastUpdate = 0;
 	
 	public static String message = "Ready for work :)";
 	public static boolean showGrid = true;
+	public static boolean showChunks = true;
 	
 	public static void main(String[] args) {
 		init();
@@ -46,7 +51,7 @@ public class Main {
 		frame.setLocationRelativeTo(null);
 		frame.add(scr);
 		Assets.init();
-		world = new World("UNTITLED", "NOID", "NOCELL", 10, 10, 0, 0);
+		world = new World("UNTITLED", "NOID", "NOCELL", 10, 10, 0, 0, 50, 50);
 		loadUI();
 		ScriptHandler.setup();
 		initialized = true;
@@ -58,7 +63,8 @@ public class Main {
 		buttons.add(new Button(width - 180, 130, 150, 20, "Switch 'Block'", "switchBrushBlock_"));
 		buttons.add(new Button(width - 180, 160, 150, 20, "Plus Z", "brushZ_+"));
 		buttons.add(new Button(width - 180, 190, 150, 20, "Minus Z", "brushZ_-"));
-		buttons.add(new Button(width - 180, 350, 150, 20, "Switch Grid", "switchGrid_"));
+		buttons.add(new Button(width - 180, 350, 70, 20, "Grid", "switchGrid_"));
+		buttons.add(new Button(width - 105, 350, 75, 20, "Chunks", "switchChunks_"));
 		buttons.add(new Button(width - 180, 380, 150, 20, "Plus Speed", "worldSpeed_+"));
 		buttons.add(new Button(width - 180, 410, 150, 20, "Minus Speed", "worldSpeed_-"));
 		buttons.add(new Button(width - 180, 440, 150, 20, "Plus Brush Size", "brushSize_+"));
@@ -70,8 +76,8 @@ public class Main {
 		
 		infoBoxes.clear();
 		infoBoxes.add(new InfoBox(width - 150, 5, 100, 16, new String[]{InputHandler.mouse.x + ", " + InputHandler.mouse.y}));
-		infoBoxes.add(new InfoBox(width - 140, 60, 100, 60, new String[]{"Z: " + brush.z, Assets.getTileTitle(brush.type), Assets.getTileInfo(brush.type), "Bock: " + brush.block}));
-		infoBoxes.add(new InfoBox(width - 180, 230, 150, 100, new String[]{"Show Grid: " + showGrid, "Speed: " + world.speed, "Brush Size: " + brush.width, "Title: " + world.title, "ID: " + world.id, "Realm: " + world.realm}));
+		infoBoxes.add(new InfoBox(width - 140, 60, 100, 60, new String[]{Assets.getTileTitle(brush.type), Assets.getTileInfo(brush.type), "Bock: " + brush.block}));
+		infoBoxes.add(new InfoBox(width - 180, 230, 150, 100, new String[]{"Show Grid: " + showGrid, "Show Chunks: " + showChunks, "Speed: " + world.speed, "Brush Size: " + brush.getW(), "Title: " + world.title, "ID: " + world.id, "Realm: " + world.realm}));
 		infoBoxes.add(new InfoBox(width - 210, height - 70, 180, 16, new String[]{message}));
 		infoBoxes.add(new InfoBox(width - 210, height - 90, 40, 16, new String[]{"" + timeSinceLastUpdate}));
 	}
@@ -100,16 +106,79 @@ public class Main {
 		InputHandler.update();
 		world.update();
 		scr.repaint();
-		timeSinceLastUpdate = System.currentTimeMillis() - lastUpdate;
+		timeUpdate();
+	}
+	
+	public static void timeUpdate(){
+		times.add(System.currentTimeMillis() - lastUpdate);
+		if(times.size() > 10){
+			times.remove(0);
+		}
+		long temp = 0;
+		for(int i = 0; i < times.size(); i++){
+			temp += times.get(i);
+		}
+		timeSinceLastUpdate = temp / times.size();
 		lastUpdate = System.currentTimeMillis();
 	}
 	
 	public static void exit(){
-		System.exit(0);
+		if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(frame, "Exit?", "Exit?", JOptionPane.YES_NO_OPTION)){
+			System.exit(0);
+		}
 	}
 
 	public static void paint() {
 		world.paint(brush);
 	}
+
+    public static Color getRandomColor(boolean black) {
+        Color C = Color.RED;
+        int r = new Random().nextInt(13);
+        switch (r) {
+            case 0:
+                C = Color.BLUE;
+                break;
+            case 1:
+                C = Color.CYAN;
+                break;
+            case 2:
+                C = Color.DARK_GRAY;
+                break;
+            case 3:
+                C = Color.GRAY;
+                break;
+            case 4:
+                C = Color.GREEN;
+                break;
+            case 5:
+                C = Color.LIGHT_GRAY;
+                break;
+            case 6:
+                C = Color.MAGENTA;
+                break;
+            case 7:
+                C = Color.ORANGE;
+                break;
+            case 8:
+                C = Color.PINK;
+                break;
+            case 9:
+                C = Color.RED;
+                break;
+            case 10:
+                C = Color.WHITE;
+                break;
+            case 11:
+                C = Color.YELLOW;
+                break;
+            case 12:
+                if (black) {
+                    C = Color.BLACK;
+                }
+                break;
+        }
+        return C;
+    }
 
 }

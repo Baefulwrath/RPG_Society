@@ -1,29 +1,34 @@
 package main;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 
 public class Brush extends Tile{
 	public Rectangle BOX = new Rectangle();
 	public boolean down = false;
-	public int z = 4000;
 	
-	public Brush(int x, int y, int zi, int w, int h){
+	public Brush(int x, int y, int w, int h){
 		super(x, y, w, h, 0, false);
 		BOX = new Rectangle(x, y, w, h);
-		z = zi;
 	}
 	
-	public Brush(Rectangle r, int zi){
-		super(r, 0, false);
-		BOX = r;
-		z = zi;
-	}
-	
-	public int getDistance(int zi){
-		int distance = z - zi;
-		if(distance < 0){
-			distance = -distance;
+	public void position(Point p, boolean centered){
+		if(centered){
+			x = p.x - (w / 2);
+			y = p.y - (h / 2);
+		}else{
+			x = p.x;
+			y = p.y;
 		}
-		return distance;
+	}
+	
+	public void resize(int wdiff, int hdiff){
+		w += wdiff;
+		h += hdiff;
+	}
+	
+	@Override
+	public Rectangle getR(){
+		return new Rectangle(x, y, w, h);
 	}
 }
