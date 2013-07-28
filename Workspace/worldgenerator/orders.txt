@@ -1,8 +1,8 @@
-ww: 400
-wh: 400
+ww: 100
+wh: 100
 cw: 25
 ch: 25
-wi: aerum
+wi: test1
 tt: 1
 ts: 64
 tb: false

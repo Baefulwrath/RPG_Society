@@ -133,9 +133,13 @@ public class Main {
 	}
 
     public static Color getRandomColor(boolean black) {
-        Color C = Color.RED;
         int r = new Random().nextInt(13);
-        switch (r) {
+        return getColor(r, black);
+    }
+
+    public static Color getColor(int col, boolean black) {
+        Color C = Color.RED;
+        switch (col) {
             case 0:
                 C = Color.BLUE;
                 break;

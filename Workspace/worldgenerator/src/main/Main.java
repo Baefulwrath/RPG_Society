@@ -127,8 +127,12 @@ public class Main {
 							}
 						}
 					}
-					chunkX = increase(chunkX, worldWidth);
-					chunkY = increase(chunkY, worldHeight);
+					if(chunkX >= worldWidth){
+						chunkX = 0;
+						chunkY = increase(chunkY, worldHeight);
+					}else{
+						chunkX++;
+					}
 				}
 			}
 			out.close();

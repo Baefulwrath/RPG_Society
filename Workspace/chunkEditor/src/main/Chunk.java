@@ -12,4 +12,13 @@ public class Chunk {
 		seed = seedi;
 		type = typei;
 	}
+	
+	public void setPos(int xi, int yi){
+		x = xi;
+		y = yi;
+	}
+
+	public void paint(Mouse m) {
+		type = m.type;
+	}
 }
